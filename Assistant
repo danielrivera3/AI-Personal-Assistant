@@ -1,0 +1,54 @@
+import random
+import datetime
+
+class PersonalAssistant:
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self):
+        greetings = [
+            "Hello, I'm your personal assistant. How can I help you today?",
+            "Hi there! What can I do for you?",
+            "Hey, it's me. What do you need?"
+        ]
+        print(random.choice(greetings))
+
+    def get_time(self):
+        current_time = datetime.datetime.now().strftime("%H:%M")
+        print(f"The current time is {current_time}")
+
+    def get_date(self):
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        print(f"Today's date is {current_date}")
+
+    def set_reminder(self, reminder, time):
+        print(f"Reminder set: '{reminder}' at {time}")
+
+    def get_weather(self, city):
+        # Code to fetch weather information from an API can be added here
+        # For simplicity, we'll just print a placeholder message
+        print(f"Weather for {city}: Sunny with a chance of clouds")
+
+if __name__ == "__main__":
+    assistant = PersonalAssistant("AI Assistant")
+    assistant.greet()
+
+    while True:
+        command = input("How can I assist you? ").lower()
+
+        if "time" in command:
+            assistant.get_time()
+        elif "date" in command:
+            assistant.get_date()
+        elif "reminder" in command:
+            reminder = input("What's the reminder? ")
+            time = input("When do you want to be reminded? ")
+            assistant.set_reminder(reminder, time)
+        elif "weather" in command:
+            city = input("Which city's weather would you like to know? ")
+            assistant.get_weather(city)
+        elif "exit" in command:
+            print("Goodbye!")
+            break
+        else:
+            print("Sorry, I don't understand that command.")
