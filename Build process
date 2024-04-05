@@ -1,0 +1,50 @@
+//Build Process and Execution of the POC
+# prove_of_concept.py
+
+import os
+import shutil
+import subprocess
+import sys
+
+# Function to create the necessary directories for the project
+def create_directories():
+    if not os.path.exists("personal_assistant"):
+        os.makedirs("personal_assistant")
+        print("Directory 'personal_assistant' created")
+
+    for directory in ["assistant", "data", "tests"]:
+        path = os.path.join("personal_assistant", directory)
+        if not os.path.exists(path):
+            os.makedirs(path)
+            print(f"Directory '{directory}' created")
+
+# Function to clone the source code repository
+def clone_repository():
+    source_code_url = "https://github.com/yourusername/personal_assistant.git"
+    print(f"Cloning repository from {source_code_url}")
+    subprocess.run(["git", "clone", source_code_url, "personal_assistant"])
+
+# Function to install the required packages
+def install_packages():
+    with open("requirements.txt", "r") as file:
+        requirements = file.readlines()
+
+    for requirement in requirements:
+        print(f"Installing {requirement.strip()}")
+        subprocess.run(["pip", "install", requirement.strip()])
+
+# Function to run the PoC
+def run_poc():
+    print("\nRunning PoC...")
+    os.chdir("personal_assistant")
+    subprocess.run(["python", "assistant.py"])
+
+# Main script
+if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == "--clone":
+        create_directories()
+        clone_repository()
+        install_packages()
+        run_poc()
+    else:
+        print("Usage: python prove_of_concept.py --clone")
